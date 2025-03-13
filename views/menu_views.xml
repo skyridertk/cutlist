@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Main menu for Cutting Stock Optimizer -->
+    <menuitem id="menu_cutting_stock_root" 
+              name="Cutting Stock" 
+              web_icon="cutting_stock_optimizer,static/description/icon.png"
+              sequence="80"/>
+    
+    <!-- Cutting Jobs submenu -->
+    <menuitem id="menu_cutting_job"
+              name="Cutting Jobs"
+              parent="menu_cutting_stock_root"
+              action="action_cutting_job"
+              sequence="10"/>
+    
+    <!-- Configuration menu -->
+    <menuitem id="menu_cutting_stock_config"
+              name="Configuration"
+              parent="menu_cutting_stock_root"
+              sequence="100"/>
+    
+    <!-- Configuration submenus -->
+    <menuitem id="menu_cutting_panel"
+              name="Panels"
+              parent="menu_cutting_stock_config"
+              action="action_cutting_panel"
+              sequence="10"/>
+
+    <menuitem id="menu_cutting_stock_sheet"
+              name="Stock Sheets"
+              parent="menu_cutting_stock_config"
+              action="action_cutting_stock_sheet"
+              sequence="20"/>
+    
+    <menuitem id="menu_cutting_optimizer_options"
+              name="Optimizer Options"
+              parent="menu_cutting_stock_config"
+              action="action_cutting_optimizer_options"
+              sequence="30"/>
+
+</odoo>

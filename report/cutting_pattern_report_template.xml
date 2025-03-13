@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cutting_pattern">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Cutting Pattern Report - <span t-field="o.name"/></h2>
+                        
+                        <div class="row mt32 mb32">
+                            <div class="col-3">
+                                <strong>Stock Sheet:</strong>
+                                <p t-field="o.stock_sheet_id"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Dimensions:</strong>
+                                <p><span t-field="o.stock_sheet_id.length"/> × <span t-field="o.stock_sheet_id.width"/></p>
+                            </div>
+                            <div class="col-3">
+                                <strong>Material:</strong>
+                                <p t-field="o.stock_sheet_id.material_id"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Optimization Date:</strong>
+                                <p t-field="o.optimization_date"/>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <strong>Optimization Results:</strong>
+                                    <ul>
+                                        <li>Usage Ratio: <span t-field="o.sheet_usage_ratio" t-options='{"widget": "percentage"}'/></li>
+                                        <li>Total Panels Placed: <span t-field="o.total_panels"/></li>
+                                        <li>Waste Area: <span t-field="o.waste_area"/></li>
+                                        <li>Optimization Time: <span t-field="o.optimization_time"/> seconds</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Panel List -->
+                        <h3>Panel List</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Panel</th>
+                                    <th>Dimensions</th>
+                                    <th>Quantity</th>
+                                    <th>Area</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td><span t-field="line.panel_id"/></td>
+                                    <td><span t-field="line.length"/> × <span t-field="line.width"/></td>
+                                    <td><span t-field="line.quantity"/></td>
+                                    <td><span t-field="line.area"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <!-- Information about the cutting pattern visualization -->
+                        <div class="row mt32">
+                            <div class="col-12">
+                                <div class="alert alert-warning">
+                                    <p><strong>Note:</strong> The cutting pattern visualization is available as a separate PDF document.
+                                    You can download it from the cutting job form.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

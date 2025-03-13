@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Stock Sheet Tree View -->
+    <record id="view_cutting_stock_sheet_tree" model="ir.ui.view">
+        <field name="name">cutting.stock.sheet.tree</field>
+        <field name="model">cutting.stock.sheet</field>
+        <field name="arch" type="xml">
+            <list string="Stock Sheets">
+                <field name="name"/>
+                <field name="length"/>
+                <field name="width"/>
+                <field name="area"/>
+                <field name="material_id"/>
+                <field name="available_quantity"/>
+                <field name="cost"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Stock Sheet Form View -->
+    <record id="view_cutting_stock_sheet_form" model="ir.ui.view">
+        <field name="name">cutting.stock.sheet.form</field>
+        <field name="model">cutting.stock.sheet</field>
+        <field name="arch" type="xml">
+            <form string="Stock Sheet">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Stock Sheet Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="length"/>
+                            <field name="width"/>
+                            <field name="area"/>
+                            <field name="available_quantity"/>
+                        </group>
+                        <group>
+                            <field name="material_id"/>
+                            <field name="grain_direction"/>
+                            <field name="cost"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Stock Sheet Search View -->
+    <record id="view_cutting_stock_sheet_search" model="ir.ui.view">
+        <field name="name">cutting.stock.sheet.search</field>
+        <field name="model">cutting.stock.sheet</field>
+        <field name="arch" type="xml">
+            <search string="Search Stock Sheets">
+                <field name="name"/>
+                <field name="material_id"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Material" name="groupby_material" domain="[]" context="{'group_by': 'material_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Stock Sheet Action Window -->
+    <record id="action_cutting_stock_sheet" model="ir.actions.act_window">
+        <field name="name">Stock Sheets</field>
+        <field name="res_model">cutting.stock.sheet</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cutting_stock_sheet_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new stock sheet
+            </p>
+            <p>
+                Define stock sheets that will be used in cutting jobs.
+            </p>
+        </field>
+    </record>
+
+</odoo>

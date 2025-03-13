@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_cutting_panel_tree" model="ir.ui.view">
+        <field name="name">cutting.panel.tree</field>
+        <field name="model">cutting.panel</field>
+        <field name="arch" type="xml">
+            <list string="Panels">
+                <field name="name"/>
+                <field name="length"/>
+                <field name="width"/>
+                <field name="area"/>
+                <field name="material_id"/>
+                <field name="grain_direction"/>
+            </list>
+        </field>
+    </record>
+
+   
+    <record id="view_cutting_panel_form" model="ir.ui.view">
+        <field name="name">cutting.panel.form</field>
+        <field name="model">cutting.panel</field>
+        <field name="arch" type="xml">
+            <form string="Panel">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Panel Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="length"/>
+                            <field name="width"/>
+                            <field name="area"/>
+                        </group>
+                        <group>
+                            <field name="material_id"/>
+                            <field name="grain_direction"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Panel Search View -->
+    <record id="view_cutting_panel_search" model="ir.ui.view">
+        <field name="name">cutting.panel.search</field>
+        <field name="model">cutting.panel</field>
+        <field name="arch" type="xml">
+            <search string="Search Panels">
+                <field name="name"/>
+                <field name="material_id"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Material" name="groupby_material" domain="[]" context="{'group_by': 'material_id'}"/>
+                    <filter string="Grain Direction" name="groupby_grain" domain="[]" context="{'group_by': 'grain_direction'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Panel Action Window -->
+    <record id="action_cutting_panel" model="ir.actions.act_window">
+        <field name="name">Panels</field>
+        <field name="res_model">cutting.panel</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cutting_panel_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new panel
+            </p>
+            <p>
+                Define panels that will be used in cutting jobs.
+            </p>
+        </field>
+    </record>
+
+</odoo>

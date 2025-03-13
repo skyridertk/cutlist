@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Optimizer Options Tree View -->
+    <record id="view_cutting_optimizer_options_tree" model="ir.ui.view">
+        <field name="name">cutting.optimizer.options.tree</field>
+        <field name="model">cutting.optimizer.options</field>
+        <field name="arch" type="xml">
+            <list string="Optimizer Options">
+                <field name="name"/>
+                <field name="kerf_thickness"/>
+                <field name="use_single_sheet"/>
+                <field name="consider_material"/>
+                <field name="consider_grain"/>
+                <field name="edge_banding"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Optimizer Options Form View -->
+    <record id="view_cutting_optimizer_options_form" model="ir.ui.view">
+        <field name="name">cutting.optimizer.options.form</field>
+        <field name="model">cutting.optimizer.options</field>
+        <field name="arch" type="xml">
+            <form string="Optimizer Options">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Options Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Basic Options">
+                            <field name="kerf_thickness"/>
+                            <field name="labels_on_panels"/>
+                            <field name="use_single_sheet"/>
+                        </group>
+                        <group string="Advanced Options">
+                            <field name="consider_material"/>
+                            <field name="edge_banding"/>
+                            <field name="consider_grain"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Optimizer Options Search View -->
+    <record id="view_cutting_optimizer_options_search" model="ir.ui.view">
+        <field name="name">cutting.optimizer.options.search</field>
+        <field name="model">cutting.optimizer.options</field>
+        <field name="arch" type="xml">
+            <search string="Search Optimizer Options">
+                <field name="name"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Optimizer Options Action Window -->
+    <record id="action_cutting_optimizer_options" model="ir.actions.act_window">
+        <field name="name">Optimizer Options</field>
+        <field name="res_model">cutting.optimizer.options</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cutting_optimizer_options_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new optimizer options
+            </p>
+            <p>
+                Define options for the cutting stock optimization.
+            </p>
+        </field>
+    </record>
+
+</odoo>

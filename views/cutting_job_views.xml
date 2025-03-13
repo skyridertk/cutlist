@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Cutting Job Tree View -->
+    <record id="view_cutting_job_tree" model="ir.ui.view">
+        <field name="name">cutting.job.tree</field>
+        <field name="model">cutting.job</field>
+        <field name="arch" type="xml">
+            <list string="Cutting Jobs" decoration-info="state == 'draft'" decoration-warning="state == 'ready'" decoration-success="state == 'optimized' or state == 'done'" decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="stock_sheet_id"/>
+                <field name="options_id"/>
+                <field name="state"/>
+                <field name="sheet_usage_ratio" widget="percentage"/>
+                <field name="total_panels"/>
+                <field name="optimization_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Cutting Job Form View -->
+    <record id="view_cutting_job_form" model="ir.ui.view">
+        <field name="name">cutting.job.form</field>
+        <field name="model">cutting.job</field>
+        <field name="arch" type="xml">
+            <form string="Cutting Job">
+                <header>
+                    <button name="action_ready" string="Set Ready" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_run_optimization" string="Run Optimization" type="object" class="oe_highlight" invisible="state != 'ready'"/>
+                    <button name="action_done" string="Mark as Done" type="object" class="oe_highlight" invisible="state != 'optimized'"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="state not in ('ready','optimized')"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state not in ('draft','ready','optimized')"/>
+                    <button name="action_open_report" string="Open Cutting Pattern" type="object" invisible="not pattern_pdf"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,ready,optimized,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Job Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="stock_sheet_id" options="{'no_create': True}"/>
+                            <field name="options_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="optimization_date" readonly="1" invisible="not optimization_date"/>
+                            <field name="sheet_usage_ratio" readonly="1" widget="percentage" invisible="sheet_usage_ratio == 0"/>
+                            <field name="waste_area" readonly="1" invisible="waste_area == 0"/>
+                            <field name="total_panels" readonly="1" invisible="total_panels == 0"/>
+                            <field name="optimization_time" readonly="1" invisible="optimization_time == 0"/>
+                            <field name="pattern_pdf" invisible="1"/>
+                            <field name="pattern_pdf_filename" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Panels" name="panels">
+                            <field name="line_ids">
+                                <list string="Panels" editable="bottom">
+                                    <field name="panel_id" options="{'no_create': True}"/>
+                                    <field name="length"/>
+                                    <field name="width"/>
+                                    <field name="area"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Cutting Job Search View -->
+    <record id="view_cutting_job_search" model="ir.ui.view">
+        <field name="name">cutting.job.search</field>
+        <field name="model">cutting.job</field>
+        <field name="arch" type="xml">
+            <search string="Search Cutting Jobs">
+                <field name="name"/>
+                <field name="stock_sheet_id"/>
+                <field name="options_id"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Ready" name="ready" domain="[('state', '=', 'ready')]"/>
+                <filter string="Optimized" name="optimized" domain="[('state', '=', 'optimized')]"/>
+                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="groupby_state" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Stock Sheet" name="groupby_stock_sheet" domain="[]" context="{'group_by': 'stock_sheet_id'}"/>
+                    <filter string="Options" name="groupby_options" domain="[]" context="{'group_by': 'options_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Cutting Job Action Window -->
+    <record id="action_cutting_job" model="ir.actions.act_window">
+        <field name="name">Cutting Jobs</field>
+        <field name="res_model">cutting.job</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cutting_job_search"/>
+        <field name="context">{'search_default_draft': 1, 'search_default_ready': 1, 'search_default_optimized': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new cutting job
+            </p>
+            <p>
+                Create a cutting job to optimize the cutting of panels from stock sheets.
+            </p>
+        </field>
+    </record>
+
+</odoo>

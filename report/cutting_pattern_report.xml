@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_cutting_pattern" model="ir.actions.report">
+        <field name="name">Cutting Pattern Report</field>
+        <field name="model">cutting.job</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cutting_stock_optimizer.report_cutting_pattern</field>
+        <field name="report_file">cutting_stock_optimizer.report_cutting_pattern</field>
+        <field name="binding_model_id" ref="model_cutting_job"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cutting_panel_user,Cutting Panel User,model_cutting_panel,base.group_user,1,1,1,1
+access_cutting_stock_sheet_user,Stock Sheet User,model_cutting_stock_sheet,base.group_user,1,1,1,1
+access_cutting_optimizer_options_user,Optimizer Options User,model_cutting_optimizer_options,base.group_user,1,1,1,1
+access_cutting_job_user,Cutting Job User,model_cutting_job,base.group_user,1,1,1,1
+access_cutting_job_line_user,Cutting Job Line User,model_cutting_job_line,base.group_user,1,1,1,1
